@@ -10,22 +10,32 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///birthdays.db")
+db = SQL("sqlite:///info.db")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        
+        #: Add the user's entry into the database
 
-        # TODO: Add the user's entry into the database
-        name = request.form.get("name")
-        month = request.form.get("month")
-        day = request.form.get("day")
-        db.execute("INSERT INTO birthdays (name, month, day) VALUES(?,?,?)", name, month, day)
-        return redirect("/")
+        if not request.form.get("name"):
+            return render_template("index.html")
+        else:
+            name = request.form.get("name")
+            name = name.upper()
+            city = request.form.get("city")
+            city = city.upper()
+            month = request.form.get("month")
+            month = month.upper()
+            language = request.form.get("language")
+        
+
+            db.execute("INSERT INTO birthday (name, city, birthday, language) VALUES(?,?,?,?)", name, city, month, language)
+            return redirect("/")
 
     else:
 
-        # TODO: Display the entries in the database on index.html
-        birthdays = db.execute("SELECT * FROM birthdays")
+        # Display the entries in the database on index.html
+        birthdays = db.execute("SELECT * FROM birthday")
         return render_template("index.html", birthdays=birthdays)
 

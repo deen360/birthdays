@@ -5,23 +5,44 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
         <link href="/static/styles.css" rel="stylesheet">
         <title>Birthdays</title>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                
+                let add = document.querySelector(".add");
+                add.addEventListener("click", function() {
+                    document.getElementById("birth").innerHTML= "THANK YOU";
+                    document.getElementById("birth").style.backgroundColor = "green"
+                    document.getElementById("jumbotron").style.backgroundColor = "white";
+                    add.style.backgroundColor = "red";
+                    document.getElementById("bodi").style.backgroundColor = "green";;
+                    
+
+                })
+
+        })
+        </script>
     </head>
-    <body>
-        <div class="jumbotron">
-            <h1>Birthdays</h1>
+    <body id="bodi">
+        <div class="jumbotron" id = "jumbotron">
+            <h1 id = "birth">Birthdays</h1>
         </div>
         <div class="container">
             <div class="section">
 
                 <h2>Add a Birthday</h2>
                 <form action="/" method="post">
-                    <input type="text" placeholder="Name" name="name" autocomplete ="off" >
-                    <input type="number" placeholder="Month" name="month" autocomplete ="off" min="1" max="12">
-                    <input type="number" placeholder="Day" name="day" autocomplete ="off" min="1" max="31">
+                    <input type="text" placeholder="Name" name="name" id="name"autocomplete ="off" autofocus required>
+                    <input type="text" placeholder="City" name="city" autocomplete ="off" required>
+                    <input type="date" placeholder="Date of birth" name="month" autocomplete ="off"required >
+                    <select name="language" id="language">
+                        <option value="" disabled selected hidden>Language</option>
+                        <option value="French">French</option>
+                        <option value="English">English</option>
+                    </select>
                   
-                    <input type="submit" value="Add Birthday">
+                    <input type="submit" value="Add Birthday" class="add">
                 </form>
-                <!-- TODO: Create a form for users to submit a name, a month, and a day -->
+                <!--  Create a form for users to submit a name, a month, and a day -->
             </div>
 
             <div class="section">
@@ -30,12 +51,15 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Birthday</th>
+                            <th>NAME</th>
+                            <th>CITY</th>
+                            <th>BIRTHDAY</th>
+                            <th>LANGUAGE</th>
+                            <th>TIME-STAMP</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- TODO: Loop through the database entries to display them in this table -->
+                        <!-- Loop through the database entries to display them in this table -->
                         {% for name in birthdays %}
                               
                             <tr>
@@ -46,9 +70,18 @@
                                 
                                 </td>
                                 <td>
-                                    {{  name.month  }}
-                                    {{  "/"  }}
-                                    {{  name.day  }}
+                                    {{  name.city  }}
+                                </td>
+                                <td>
+                                    {{  name.birthday  }}
+                                </td>
+                                
+                                <td>
+                                    {{  name.language  }}
+                                </td>
+
+                                <td>
+                                    {{  name.time  }}
                                 </td>
                             </tr>
                         
